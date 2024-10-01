@@ -8,12 +8,12 @@
     "description": "A panic button app to report bullying cases",
     "icons": [
       {
-        "src": "icons/button.png",
+        "src": "/panic-button2/icons/button.png",
         "sizes": "192x192",
         "type": "image/png"
       },
       {
-        "src": "icons/button1.png",
+        "src": "/panic-button2/icons/button1.png",
         "sizes": "512x512",
         "type": "image/png"
       }
