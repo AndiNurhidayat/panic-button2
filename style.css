@@ -1,0 +1,58 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(icons/backround1.jpeg);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  height: 100vh;
+}
+
+.panic-container {
+  width: 300px;
+  margin: 100px ;
+  padding: 30px 20px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 0 8px 8px rgb(52, 52, 52);
+  border-radius: 8px;
+  position: fixed;
+  }
+
+ h1 {
+  color: rgb(216, 212, 212);
+ } 
+
+button {
+  width: 200px;
+  padding: 20px 20px;
+  background-color: rgb(0, 0, 0);
+  color: whitesmoke;
+  border:none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.5em;
+  }
+  
+button:hover {
+  animation-delay: .2s;
+  transition-duration: .2s;
+  color: rgb(227, 207, 207);
+  background-color: rgb(255, 0, 0);
+  box-shadow: 0 0 8px 2px rgb(255, 0, 0);
+  }
+  
+p {
+  font-size: 1.2em;
+  color: #0c0c0c;
+  margin-top: 20px;
+  }

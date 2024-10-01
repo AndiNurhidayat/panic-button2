@@ -3,124 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panic Button</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-image: url(https://www.slidebackground.com/uploads/black-and-silver-background/black-and-silver-black-silver-background-wallpaper--21.jpg);
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      height: 100vh;
-    }
-    
-    .panic-container {
-      width: 300px;
-      margin: 100px auto;
-      padding: 20px;
-      text-align: center;
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(1px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 0 6px 8px rgb(47, 45, 45);
-      border-radius: 8px;
-      position: fixed;
-      }
-      
-    button {
-      width: 200px;
-      padding: 20px 20px;
-      background-color: black;
-      color: whitesmoke;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1.5em;
-      }
-      
-    button:hover {
-      color: black;
-      background-color: silver;
-      }
-      
-    p {
-      font-size: 1.2em;
-      color: #0c0c0c;
-      margin-top: 20px;
-      }
-      
-  </style>
+  <title>panic button</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" href="/icons/button.png">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="panic-container">
-    <h1>Panic Button</h1>
+    <h1>WARNING !</h1>
     <button id="panicButton">Panic Button</button>
     <p id="status"></p>
   </div>
 
+  <script src="panic.js"></script>
   <script>
-    document.getElementById('panicButton').addEventListener('click', function() {
-        // Check if Geolocation is supported
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(sendLocationToTelegram, showError);
-        } else {
-          document.getElementById('status').textContent = "Geolocation is not supported by this browser.";
-        }
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+        console.log('Service Worker Registered with scope:', registration.scope);
+      }).catch(function(error) {
+        console.log('Service Worker registration failed:', error);
       });
-      
-      function sendLocationToTelegram(position) {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-        
-        document.getElementById('status').textContent = `Location: ${latitude}, ${longitude}`;
-      
-        // Data to send to Telegram bot
-        const message = `Panic Alert! Location: https://maps.google.com/?q=${latitude},${longitude}`;
-      
-        // Replace with your bot token and chat ID
-        const botToken = '8130533536:AAEVLOdUAgEtEphyWdakqQGeqiUcLfPvQ4k';
-        const chatId = '967982145';
-      
-        // Send the message via Telegram Bot API
-        fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`)
-          .then(response => response.json())
-          .then(data => {
-            if (data.ok) {
-              document.getElementById('status').textContent = 'Location sent successfully!';
-            } else {
-              document.getElementById('status').textContent = 'Failed to send location.';
-            }
-          })
-          .catch(error => {
-            document.getElementById('status').textContent = 'Error occurred.';
-            console.error('Error:', error);
-          });
-      }
-      
-      function showError(error) {
-        switch (error.code) {
-          case error.PERMISSION_DENIED:
-            document.getElementById('status').textContent = "User denied the request for Geolocation.";
-            break;
-          case error.POSITION_UNAVAILABLE:
-            document.getElementById('status').textContent = "Location information is unavailable.";
-            break;
-          case error.TIMEOUT:
-            document.getElementById('status').textContent = "The request to get user location timed out.";
-            break;
-          case error.UNKNOWN_ERROR:
-            document.getElementById('status').textContent = "An unknown error occurred.";
-            break;
-        }
-      }      
-  </script>
+    }
+  </script>  
 </body>
 </html>
